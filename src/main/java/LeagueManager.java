@@ -1,11 +1,14 @@
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LeagueManager {
 
-    public List<Match> findMatchesByTeam(int teamId){
+    public List<Match> findMatchesByTeam(int teamId,List<Match> matches){
         //רשימה של משחקים שקבוצה מסוימת שיחקה
-        return null ;
+        return matches.stream()
+                .filter(match -> match.getHomeTeam().getId() == teamId || match.getAwayTeam().getId() == teamId)
+                .collect(Collectors.toList());
     }
 
     public List<Team> findTopScoringTeams(int n){
