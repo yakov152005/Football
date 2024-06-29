@@ -8,9 +8,10 @@ public class Player {
     private String lastName;
     private Team team;
 
-    public Player(String firstName, String lastName) {
+    public Player(String firstName, String lastName,Team team) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.team = team;
         this.id = idCounter.incrementAndGet();
     }
 
@@ -26,8 +27,13 @@ public class Player {
         return lastName;
     }
 
+    public Team getTeam() {
+        return this.team;
+    }
+
     public String toString(){
         return this.firstName + " " + this.lastName;
     }
+
 
 }

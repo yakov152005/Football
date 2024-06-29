@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63419a78-5345-41fc-819e-d68a16081e7d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/teams.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Comparators.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Pair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Goal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Goal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/LeagueManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LeagueManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Match.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +39,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.p.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -78,7 +76,14 @@
       <workItem from="1719086262650" duration="1003000" />
       <workItem from="1719176487798" duration="139000" />
       <workItem from="1719177271124" duration="6818000" />
-      <workItem from="1719184103334" duration="870000" />
+      <workItem from="1719184103334" duration="906000" />
+      <workItem from="1719307872910" duration="70000" />
+      <workItem from="1719431535844" duration="882000" />
+      <workItem from="1719489545549" duration="536000" />
+      <workItem from="1719490391710" duration="865000" />
+      <workItem from="1719582026264" duration="5672000" />
+      <workItem from="1719588771024" duration="890000" />
+      <workItem from="1719660695451" duration="23340000" />
     </task>
     <servers />
   </component>
