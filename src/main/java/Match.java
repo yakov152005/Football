@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,16 +24,8 @@ public class Match {
         return homeTeam;
     }
 
-    public void setHomeTeam(Team homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-
     public Team getAwayTeam() {
         return awayTeam;
-    }
-
-    public void setAwayTeam(Team awayTeam) {
-        this.awayTeam = awayTeam;
     }
 
     public List<Goal> getGoals() {
@@ -44,7 +35,6 @@ public class Match {
     public void setGoals(List<Goal> goals) {
         this.goals = goals;
     }
-
 
     @Override
     public String toString() {

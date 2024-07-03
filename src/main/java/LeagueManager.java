@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 public class LeagueManager {
     private final static String[] FIRST_NAMES = {"Yakov", "Daniel", "Ido", "Niv", "Yadin", "Shai", "Gal", "Or", "Odel", "Amit", "Roni", "Sivan", "Toni", "Nick", "Ron", "Adi", "Eli", "Roni", "Ben", "Maor", "Tomer", "David", "Naor", "Yakir", "Itamer", "Nisim", "Nir", "Lowi", "Cristiano", "Lyonal", "Embpa", "Eto", "Sergio", "Alex", "Roy", "Din", "Dan", "Baruch","Tamir","Tal","Div","Eiv","Saar","Lior","Lian","Dolev","Leon","Liam"};
     private final static String[] LAST_NAMES = {"BenHemo", "Gino", "Korn", "Muli", "Amitay", "Givati", "BenHaim", "Shimono", "Balgres", "Aton", "Gon", "Mizrahi", "Messi", "Ronaldo", "David", "Torgman", "Davidovich", "Levi", "Neshar", "Hadida", "Zomer", "Shamir","Shokron","Nahum","Revivo","Zevi","Atias","Robinson","Ben-Dahan","Perez","Tamoz","Bokobza","Malachi"};
+    public static final int CYCLES = 9;
+    public static final int GAMES = 5;
+    public static final int TEN_SECONDS = 10;
     public static Random r = new Random();
     public static Scanner s = new Scanner(System.in);
-    public static final int GAMES = 5;
     private List<Team> teamList;
     private List<Match> matches;
     private Map<Team, Integer> scoreTable;
@@ -24,7 +26,7 @@ public class LeagueManager {
         generateMatchSchedule();
         System.out.println("|Welcome to the Champions League|");
 
-        int cycles = 9;
+        int cycles = CYCLES;
         int numberOfCycles = 1;
         while (cycles > 0) {
             System.out.println("The " +  numberOfCycles + "st Cycle begins");
@@ -33,7 +35,7 @@ public class LeagueManager {
                 Match match = matches.get(r.nextInt(matches.size()));
                 System.out.print("Game number: " + (i + 1)  +" --> ");
                 System.out.println(match.getHomeTeam().getTeamName() + " |VS| " + match.getAwayTeam().getTeamName());
-                countdown(10);
+                countdown(TEN_SECONDS);
                 runMatch(match);
             }
 
@@ -74,15 +76,6 @@ public class LeagueManager {
         }
     }
 
-    private void printTeam(List<Team> teamList){
-        System.out.println("Teams and Players:");
-        for (Team team : teamList) {
-            System.out.println("Team ID: " + team.getId() + ", Name: " + team.getTeamName());
-            for (Player player : team.getPlayers()) {
-                System.out.println("    " + player);
-            }
-        }
-    }
 
     private void runMatch(Match match) {
         int goalsTeam1 = r.nextInt(5);
@@ -181,58 +174,19 @@ public class LeagueManager {
                 System.out.print("Enter team ID: ");
                 String teamIdStr = s.next();
                 int teamID = stringToInt(teamIdStr);
-//                List<Match> matchesByTeam = findMatchesByTeam(teamID);
-//                matchesByTeam.forEach(System.out::println);
-                List<Match> playedMatchesByTeam = findMatchesByTeam(teamID);
-                if (!playedMatchesByTeam.isEmpty()) {
-                    playedMatchesByTeam.forEach(match -> {
-                        int goalsTeam1 = 0;
-                        int goalsTeam2 = 0;
-                        System.out.println("Match ID: " + match.getId());
-                        System.out.println("Home Team: " + match.getHomeTeam().getTeamName() + " (ID: " + match.getHomeTeam().getId() + ")");
-                        System.out.println("Away Team: " + match.getAwayTeam().getTeamName() + " (ID: " + match.getAwayTeam().getId() + ")");
-                        System.out.println("Goals: ");
-                        for (Goal goal : match.getGoals()) {
-                            System.out.println(goal + ", Team: " + " " + goal.getScorer().getTeam().getTeamName());
-                            if (goal.getScorer().getTeam().getTeamName().equals(match.getHomeTeam().getTeamName())) {
-                                goalsTeam1++;
-                            } else if (goal.getScorer().getTeam().getTeamName().equals(match.getAwayTeam().getTeamName())) {
-                                goalsTeam2++;
-                            }
-                        }
-                        System.out.println("Result: " + goalsTeam1 + " - " + goalsTeam2);
-                        String winner = goalsTeam1 > goalsTeam2 ? match.getHomeTeam().getTeamName() :
-                                goalsTeam1 < goalsTeam2 ? match.getAwayTeam().getTeamName() : "Draw";
-                        System.out.println("Winner: " + winner);
-                        System.out.println();
-                    });
-                }else {
-                    System.out.println("This team has not played any games yet.");
-                }
+                caseOneFindMatchesByTeam(teamID);
             }
             case 2 -> {
                 System.out.print("Enter number of teams: ");
                 String nStr = s.next();
                 int n = stringToInt(nStr);
-                List<Pair<Team, Integer>> topScoringTeams= findTopScoringTeams(n);
-                topScoringTeams.forEach(pair ->
-                        System.out.println(pair.getKey().getTeamName()));
+                caseTwoFindTopScoringTeams(n);
             }
             case 3 -> {
                 System.out.print("Enter a number of goals: ");
                 String nStr = s.next();
                 int n = stringToInt(nStr);
-                List<Player> playerHigherThenN = findPlayersWithAtLeastNGoals(n);
-                if (playerHigherThenN.isEmpty()){
-                    System.out.println("There is no player who has made such a number of goals");
-                }else {
-                    if (n <= 0){
-                        System.out.println("Default position is 1.");
-                    }
-                    playerHigherThenN.forEach(player ->
-                            System.out.println(player.getId() + ", " + player.getFirstName() + " " + player.getLastName() +
-                            ", " + player.getTeam().getTeamName()));
-                }
+                caseThreeFindPlayersWithAtLeastNGoals(n);
             }
             case 4 ->{
                 System.out.print("Enter the position: ");
@@ -245,14 +199,71 @@ public class LeagueManager {
                 System.out.print("Enter number of players do u want to see in a top: ");
                 String nStr = s.next();
                 int n = stringToInt(nStr);
-                Map<Integer,Integer> getTopScorers = getTopScorers(n);
-                for (Map.Entry<Integer,Integer> m : getTopScorers.entrySet()){
-                    System.out.println(m);
-                }
+                caseFiveGetTopScorer(n);
             }
             default -> System.out.println("Invalid option.");
         }
         printMenuForSwitch();
+    }
+
+    public void caseOneFindMatchesByTeam(int teamID){
+
+        List<Match> playedMatchesByTeam = findMatchesByTeam(teamID);
+        if (!playedMatchesByTeam.isEmpty()) {
+            playedMatchesByTeam.forEach(match -> {
+                int goalsTeam1 = 0;
+                int goalsTeam2 = 0;
+                System.out.println("Match ID: " + match.getId());
+                System.out.println("Home Team: " + match.getHomeTeam().getTeamName() + " (ID: " + match.getHomeTeam().getId() + ")");
+                System.out.println("Away Team: " + match.getAwayTeam().getTeamName() + " (ID: " + match.getAwayTeam().getId() + ")");
+                System.out.println("Goals: ");
+                for (Goal goal : match.getGoals()) {
+                    System.out.println(goal + ", Team: " + " " + goal.getScorer().getTeam().getTeamName());
+                    if (goal.getScorer().getTeam().getTeamName().equals(match.getHomeTeam().getTeamName())) {
+                        goalsTeam1++;
+                    } else if (goal.getScorer().getTeam().getTeamName().equals(match.getAwayTeam().getTeamName())) {
+                        goalsTeam2++;
+                    }
+                }
+                System.out.println("Result: " + goalsTeam1 + " - " + goalsTeam2);
+                String winner = goalsTeam1 > goalsTeam2 ? match.getHomeTeam().getTeamName() :
+                        goalsTeam1 < goalsTeam2 ? match.getAwayTeam().getTeamName() : "Draw";
+                System.out.println("Winner: " + winner);
+                System.out.println();
+            });
+        }else {
+            System.out.println("This team has not played any games yet.");
+        }
+    }
+
+    public void caseTwoFindTopScoringTeams(int n){
+
+        List<Pair<Team, Integer>> topScoringTeams= findTopScoringTeams(n);
+        topScoringTeams.forEach(pair ->
+                System.out.println(pair.getKey().getTeamName()));
+    }
+
+    public void caseThreeFindPlayersWithAtLeastNGoals(int n){
+
+        List<Player> playerHigherThenN = findPlayersWithAtLeastNGoals(n);
+        if (playerHigherThenN.isEmpty()){
+            System.out.println("There is no player who has made such a number of goals");
+        }else {
+            if (n <= 0){
+                System.out.println("Default position is 1.");
+            }
+            playerHigherThenN.forEach(player ->
+                    System.out.println(player.getId() + ", " + player.getFirstName() + " " + player.getLastName() +
+                            ", " + player.getTeam().getTeamName()));
+        }
+    }
+
+    public void caseFiveGetTopScorer(int n){
+
+        Map<Integer,Integer> getTopScorers = getTopScorers(n);
+        for (Map.Entry<Integer,Integer> m : getTopScorers.entrySet()){
+            System.out.println(m);
+        }
     }
 
     public static List<Team> loadTeamsFromCSV(String fileName) {
@@ -303,19 +314,7 @@ public class LeagueManager {
 
 
     public List<Player> findPlayersWithAtLeastNGoals(int n){
-//        Map<Player,Integer> playersGoal = new HashMap<>();
-//
-//        for (Match match : matches) {
-//            for (Goal goal : match.getGoals()) {
-//               playersGoal.put(goal.getScorer(),playersGoal.getOrDefault(goal.getScorer(),0)+1);
-//            }
-//        }
-//        List<Player> playersHighThenN = new LinkedList<>();
-//        for (Map.Entry<Player,Integer> m : playersGoal.entrySet()){
-//            if (m.getValue() >= n){
-//                playersHighThenN.add(m.getKey());
-//            }
-//        }
+
         Map<Player,Long> playersGoal = matches.stream()
                 .flatMap(match -> match.getGoals().stream())
                 .collect(Collectors.groupingBy(
@@ -360,19 +359,6 @@ public class LeagueManager {
             }
         }
 
-
-//        List<Map.Entry<Integer, Integer>> sortedEntries = new ArrayList<>(goalsMap.entrySet());
-//        sortedEntries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
-//
-//
-//        Map<Integer, Integer> topScorers = new LinkedHashMap<>();
-//        for (int i = 0; i < n && i < sortedEntries.size(); i++) {
-//            Map.Entry<Integer, Integer> entry = sortedEntries.get(i);
-//            topScorers.put(entry.getKey(), entry.getValue());
-//        }
-//
-//        return topScorers;
-
         return goalsMap.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(n)
@@ -383,5 +369,6 @@ public class LeagueManager {
                         LinkedHashMap::new
                 ));
     }
+
 
 }
